@@ -10,11 +10,37 @@ var generateBtn = document.querySelector("#generate");
 
 function generatePassword () {
 
-  window.prompt("Enter password length between 8 - 128 characters.");
-  window.prompt("Would you like lowercase letters?");
-  window.prompt("Would you like uppercase letters?");
-  window.prompt("Would you like numbers?");
-  window.prompt("Would you like special characters?");
+  var length = Number(prompt("Enter password length between 8 - 128 characters."));
+
+  if (Number.isNaN(length)) {
+    window.alert("You must enter a valid number.");
+    return null;
+  }
+
+  if (length<8) {
+    window.alert("Password must be 8 or more characters long.");
+    return null;
+  }
+
+  if (length>128) {
+    window.alert("Password must be 128 or fewer characters long.");
+    return null;
+  }
+
+  var lowercase = window.confirm("Would you like lowercase letters?");
+  var uppercase = window.confirm("Would you like uppercase letters?");
+  var numerical = window.confirm("Would you like numbers?");
+  var special = window.confirm("Would you like special characters?");
+
+  if (
+    lowercase === false ||
+    uppercase === false ||
+    numerical === false ||
+    special === false
+  ) {
+    window.alert("You must choose at least one field.");
+    return null;
+  }
 
 
 }
