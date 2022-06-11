@@ -32,12 +32,7 @@ function generatePassword () {
   var numerical = window.confirm("Would you like numbers?");
   var special = window.confirm("Would you like special characters?");
 
-  if (
-    lowercase === false ||
-    uppercase === false ||
-    numerical === false ||
-    special === false
-  ) {
+  if ( lowercase === false || uppercase === false || numerical === false || special === false) {
     window.alert("You must choose at least one field.");
     return null;
   }
