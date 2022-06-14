@@ -6,9 +6,6 @@ var numerical = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 var special = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")"];
 var options = "";
 
-// Get references to the #generate element
-var generateBtn = document.querySelector("#generate");
-
 function passwordOptions () {
 
   var length = Number(prompt("Enter password length between 8 - 128 characters."));
@@ -33,7 +30,7 @@ function passwordOptions () {
   var numerical = window.confirm("Would you like numbers?");
   var special = window.confirm("Would you like special characters?");
 
-  if ( lowercase === false || uppercase === false || numerical === false || special === false) {
+  if ( lowercase === false && uppercase === false && numerical === false && special === false) {
     window.alert("You must choose at least one field.");
     return null;
   }
@@ -46,12 +43,13 @@ function passwordOptions () {
     special: special
   }
 
-  return passwordOptions;
+  return passwordChoices;
 }
 
-var randomChoice = function(arr) {
-var randomOptions = Math.floor(Math.random() * arr.length);
-var randomElement = arr[randomOptions];
+var randomChoice = function(array) {
+var randomOptions = Math.floor(Math.random() * array.length);
+var randomElement = array[randomOptions];
+return randomElement;
 }
 
 var generatePassword = function() {
@@ -61,15 +59,40 @@ var generatePassword = function() {
   var possible =[];
   var absolute =[];
 
-  if (!choices) return null;
-
   if (choices.uppercase) {
+    possible = possible.concat(uppercase);
+    absolute.push(randomChoice(uppercase));
+  }
+
+  if (choices.lowercase) {
+    possible = possible.concat(lowercase);
+    absolute.push(randomChoice(lowercase));
+  }
+
+  if (choices.numerical) {
+    possible = possible.concat(numerical);
+    absolute.push(randomChoice(numerical));
+  }
+
+  if (choices.special) {
     possible = possible.concat(special);
     absolute.push(randomChoice(special));
   }
 
+  for (var i=0; i<choices.length; i++) {
+    var probable = randomChoice(possible);
+    result.push(probable);
+  }
+
+  for (var i=0; i<absolute.length; i++) {
+    result[i] = absolute[i];
+  }
+
+  return result.join('');
+
 }
 
+var generateBtn = document.querySelector("#generate");
 
 // Write password to the #password input
 function writePassword() {
@@ -77,8 +100,6 @@ function writePassword() {
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
-
-
 
 }
 
